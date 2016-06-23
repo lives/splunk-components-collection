@@ -1,8 +1,16 @@
+
+/**/
+.scc-takethetour .credits {
+    font-size: 9px;
+    text-align: center;
+}
+
+
+
 /**/
 .scc-takethetour .never-show-again {
 	float: left;
 }
-
 
 .scc-takethetour .never-show-again input {
 	margin-top: 0;

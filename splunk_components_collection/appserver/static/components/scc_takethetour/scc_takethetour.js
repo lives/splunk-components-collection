@@ -19,19 +19,16 @@ define(function(require, exports, module) {
 			title: "Take the tour",
 			width: 60,
 			close_btn_label: "Close",
-			no_more_cookie_name:"scc_takethetour",
 			no_more_label: "Do not show this tour again",
-            hide_container: false
+            hide_container: false,
+            show_credits: false
         },
 
         initialize: function() {
 			SimpleSplunkView.prototype.initialize.apply(this, arguments);
             
-            
-            
             //console.log(this.className);
-            
-            
+
             // 
             if(this.settings.get('hide_container') == true){
                 this.$el.parent().css({
@@ -47,21 +44,10 @@ define(function(require, exports, module) {
 
 		render: function() {
 			this.$el.html('');
-            
+
+            // 
             var ck_name = 'scc_takethetour' + SplunkUtils.getCurrentApp();
-			
-            /*
-			function getCookie(ck_name) {
-				var oRegex = new RegExp("(?:; )?" + ck_name + "=([^;]*);?");
-				if (oRegex.test(document.cookie)) {
-					return decodeURIComponent(RegExp["$1"]);
-				}
-				else{
-					return null;
-				}
-			}
-			*/
-            
+
             function getCookie(ck_name) {
 				var oRegex = new RegExp("(?:; )?" + ck_name + "=([^;]*);?");
 				return oRegex.test(document.cookie) ? decodeURIComponent(RegExp["$1"]) : null;
@@ -117,6 +103,13 @@ define(function(require, exports, module) {
 				var active_slide_id = 0;
 				var max_slide_id = $user_slides.length - 1;
 
+                //
+                if(this.settings.get('show_credits') === true){
+                    var html_credits = '<div class="credits">'
+                                        +   'Powered by <a href="http://www.splunk.com" target="_blank">Splunk</a> and <a href="https://github.com/ftoulouse/splunk-components-collection" target="_blank">Scc</a>'
+                                        + '</div>';
+                    $modal.find('.modal-footer').append(html_credits);
+                }
 
 				
 				$user_slides.each(function(idx){
