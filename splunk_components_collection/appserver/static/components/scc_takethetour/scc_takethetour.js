@@ -118,6 +118,8 @@ define(function(require, exports, module) {
 
 					idx == 0 ? $slides_nav_links.find('button').eq(idx).addClass('btn-primary') : $slides.find('li').eq(idx).addClass('hide');
 				});
+                $('#'+this.settings.get('user_slides')).remove();
+                
 
 				$slides_nav_prev.on('click', function(){
 					if(!$(this).hasClass('disabled')){
