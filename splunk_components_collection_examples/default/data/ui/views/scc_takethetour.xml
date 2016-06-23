@@ -13,7 +13,6 @@
                     "title":"Here is my new app : take the tour !",
                     "close_btn_label":"Close",
                     "no_more_label":"Do not show this again",
-                    "no_more_cookie_name":"scc_takethetour",
                     "hide_container":false
                 }'>
             </div>

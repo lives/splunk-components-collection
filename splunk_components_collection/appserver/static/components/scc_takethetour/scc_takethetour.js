@@ -8,12 +8,13 @@
 
 define(function(require, exports, module) {
     var $ = require('jquery');
-	var mvc = require('splunkjs/mvc');
+	//var mvc = require('splunkjs/mvc');
 	var SimpleSplunkView = require('splunkjs/mvc/simplesplunkview');
+    var SplunkUtils = require('splunkjs/mvc/utils');
 	require("css!./scc_takethetour.css");
 	
     var SccTakeTheTour = SimpleSplunkView.extend({
-        className: "xxx-scc-takethetour",
+        className: "scc-takethetour",
 		options: {
 			title: "Take the tour",
 			width: 60,
@@ -25,6 +26,11 @@ define(function(require, exports, module) {
 
         initialize: function() {
 			SimpleSplunkView.prototype.initialize.apply(this, arguments);
+            
+            
+            
+            //console.log(this.className);
+            
             
             // 
             if(this.settings.get('hide_container') == true){
@@ -42,8 +48,9 @@ define(function(require, exports, module) {
 		render: function() {
 			this.$el.html('');
             
-            
+            var ck_name = 'scc_takethetour' + SplunkUtils.getCurrentApp();
 			
+            /*
 			function getCookie(ck_name) {
 				var oRegex = new RegExp("(?:; )?" + ck_name + "=([^;]*);?");
 				if (oRegex.test(document.cookie)) {
@@ -53,7 +60,13 @@ define(function(require, exports, module) {
 					return null;
 				}
 			}
-			
+			*/
+            
+            function getCookie(ck_name) {
+				var oRegex = new RegExp("(?:; )?" + ck_name + "=([^;]*);?");
+				return oRegex.test(document.cookie) ? decodeURIComponent(RegExp["$1"]) : null;
+			}
+            
 			function setCookie(ck_name) {
 				document.cookie = ck_name + "= scc-takethetour";
 			}
@@ -62,7 +75,7 @@ define(function(require, exports, module) {
 			// ------------------------
 			if(typeof this.settings.get('user_slides') !== 'undefined' 
 				&& $('#'+this.settings.get('user_slides')).length == 1
-				&& getCookie(this.settings.get('no_more_cookie_name')) == null){
+				&& getCookie(ck_name) == null){
 
 				var html_tpl = '<div class="scc-takethetour modal fade" id="scc-takethetour-modal" tabindex="-1" role="dialog" aria-labelledby="scc-takethetour-modal">'
 								+ 	'<div class="modal-dialog" role="document">'
@@ -186,7 +199,7 @@ define(function(require, exports, module) {
 					$modal_body.css('overflow-y', overflow_y);
 				};
 				
-				var ck_name = this.settings.get('no_more_cookie_name');
+				//var ck_name = this.settings.get('no_more_cookie_name');
 				
 				
 				$modal
