@@ -109,7 +109,7 @@ define(function(require, exports, module) {
                 }
 
 				$user_slides.each(function(idx){
-					$slides_nav_links.append('<button class="btn btn-default" data-slide-id="' + idx + '">' + idx + '</button>');
+					$slides_nav_links.append('<button class="btn btn-default" data-slide-id="' + idx + '">' + (idx + 1) + '</button>');
 					$slides.append($user_slides.eq(idx));
 
 					idx == 0 ? $slides_nav_links.find('button').eq(idx).addClass('btn-primary') : $slides.find('li').eq(idx).addClass('hide');
