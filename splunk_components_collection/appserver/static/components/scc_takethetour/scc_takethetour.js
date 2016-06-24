@@ -18,7 +18,8 @@ define(function(require, exports, module) {
 			close_btn_label: "Close",
 			no_more_label: "Do not show this tour again",
             hide_container: false,
-            show_credits: false
+            show_credits: false,
+			cookie_name_suffix: ""
         },
 
         initialize: function() {
@@ -41,7 +42,8 @@ define(function(require, exports, module) {
 			this.$el.html('');
 
             // Cookie stuff
-            var ck_name = 'scc_takethetour' + SplunkUtils.getCurrentApp();
+			var cookie_name_suffix = this.settings.get('cookie_name_suffix') == "" ? "" : '_' + this.settings.get('cookie_name_suffix');
+            var ck_name = 'scc_takethetour_' + SplunkUtils.getCurrentApp() + cookie_name_suffix;
 
             function getCookie(ck_name) {
 				var oRegex = new RegExp("(?:; )?" + ck_name + "=([^;]*);?");
@@ -106,7 +108,6 @@ define(function(require, exports, module) {
                     $modal.find('.modal-footer').append(html_credits);
                 }
 
-				
 				$user_slides.each(function(idx){
 					$slides_nav_links.append('<button class="btn btn-default" data-slide-id="' + idx + '">' + idx + '</button>');
 					$slides.append($user_slides.eq(idx));
@@ -132,8 +133,7 @@ define(function(require, exports, module) {
 					slidesManagr($(e.target).attr('data-slide-id'));
 				});
 
-
-				// 
+				// Add / remove vertical scrollbar on page resize
 				function isScrollNeeded(){
 					var overflow_y = $slides_nav.outerHeight(true) + $slides.outerHeight() > $modal_body.height() ? 'scroll' : 'none'; 
 					$modal_body.css('overflow-y', overflow_y);
