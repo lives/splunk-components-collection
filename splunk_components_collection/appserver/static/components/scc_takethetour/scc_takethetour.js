@@ -182,7 +182,8 @@ define(function(require, exports, module) {
 						}
 					}
 
-					active_slide_id = slide_id;					
+					active_slide_id = slide_id;
+					isScrollNeeded();					
 				}
 
 				$slides_nav_prev.addClass('disabled');
@@ -190,20 +191,18 @@ define(function(require, exports, module) {
 				
 				
 				function isScrollNeeded(){
-					var overflow_y = $slides_nav.outerHeight(true) + $slides.outerHeight() > $modal_body.outerHeight() ? 'scroll' : 'none'; 
+					var overflow_y = $slides_nav.outerHeight(true) + $slides.outerHeight() > $modal_body.height() ? 'scroll' : 'none'; 
 					$modal_body.css('overflow-y', overflow_y);
 				};
-				
-				//var ck_name = this.settings.get('no_more_cookie_name');
-				
-				
+
 				$modal
 				.on('show.bs.modal', function(e){
-					isScrollNeeded();
+					//isScrollNeeded();
 				})
 				.on('shown.bs.modal', function(e){
 					// Prevents page body scrolling if modal content is scrollable
 					$('body').css({overflow:"hidden", position:"fixed", width: "100%"});
+					isScrollNeeded();
 				})
 				.on('hide.bs.modal', function(e){
 					//
