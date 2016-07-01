@@ -1,0 +1,12 @@
+[app/ui]
+version = 6.4.1
+modtime = 1466016783.510168000
+
+[app/launcher]
+version = 6.4.1
+modtime = 1466016783.512354000
+
+[views/take_the_tour]
+owner = admin
+version = 6.4.1
+modtime = 1466016956.580017000
