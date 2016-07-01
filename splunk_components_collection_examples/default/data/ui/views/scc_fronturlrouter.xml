@@ -1,0 +1,21 @@
+<form script="splunk_components_collection:scc_fronturlrouter.js">
+	<label>scc_fronturlrouter</label>
+	<description>
+		This dashboard is an example of use of the script "fronturlrouter" and of its various options.
+		Consult the wiki of the project on github for more details.
+	</description>
+    <row>
+		<panel>
+			<table>
+				<search>
+				  <query>index=_internal earliest=-5m | head 20 | table _time host sourcetype</query>
+				</search>
+				<option name="wrap">true</option>
+				<option name="rowNumbers">false</option>
+				<option name="dataOverlayMode">none</option>
+				<option name="drilldown">cell</option>
+				<option name="count">10</option>
+			</table>
+		</panel>
+    </row>
+</form>
