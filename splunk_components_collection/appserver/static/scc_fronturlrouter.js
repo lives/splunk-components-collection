@@ -54,7 +54,9 @@ require([
 												+				'<p>' + settings.modal_msg + '</p>'
 												+			'</div>'
 												+			'<div class="modal-footer">'
-												+				'<span class="fto-modal-lifetime">' + settings.modal_lifetime + '</span>'
+												+				'<button id="redirection-btn" class="btn btn-primary">'
+												+					'Redirection <span class="fto-modal-lifetime">' + settings.modal_lifetime + '</span>'
+												+				'</button>'
 												+			'</div>'
 												+		'</div>'
 												+	'</div>'
@@ -77,6 +79,11 @@ require([
 											$('.fto-modal-lifetime').html(settings.modal_lifetime);
 										}
 									},1000);
+									
+									//
+									$('#redirection-btn').on('click', function(e){
+										doRedirection(redirected_page);
+									});
 								});
 							}
 							else{
