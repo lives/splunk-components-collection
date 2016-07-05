@@ -1,0 +1,13 @@
+<form script="splunk_components_collection:autodiscover.js">
+	<label>scc_simpleupload</label>
+	<description>
+		This dashboard is an example of use of the component "simpleupload" and of its various options.
+		Consult the wiki of the project on github for more details.
+	</description>
+    <row>
+        <html>
+            <div class = "splunk-view" data-require = "app/splunk_components_collection/components/scc_simpleupload/scc_simpleupload">
+            </div>
+        </html>
+    </row>
+</form>
