@@ -105,8 +105,8 @@
 	display: none;
 }
 
-.file .cancel {
-	display: none;
+.file .close {
+
 }
 
 .file.uploading{
@@ -147,8 +147,9 @@
 }
 
 .file .size{
-    font-size:10px;
-    padding-left:15px;
+    font-size: 10px;
+    padding-left: 15px;
+	color: #999;
 }
 
 .file .close{
