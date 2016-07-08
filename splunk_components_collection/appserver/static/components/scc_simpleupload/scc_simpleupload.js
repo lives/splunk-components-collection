@@ -66,7 +66,7 @@ define(function(require, exports, module) {
 					var file_name = $file.attr('data-file-name');
 
 					if(confirm('Are you sure you want to delete '+ file_name)){
-						$.ajax('/custom/uploader/service/remove/'+ file_name).done(function(){
+						$.ajax('/custom/splunk_components_collection/scc_simpleupload_service/remove/'+ file_name).done(function(){
 							$file.remove();
 						}).error(function(){
 							alert('There was an error while deleting. Check web_service.log for more info.');
@@ -82,6 +82,16 @@ define(function(require, exports, module) {
 				// Btn close -> delete file
 				if($target.hasClass('icon-close')){
 					removeFileFromList($pending_list, $target.closest('.file').index());
+				}
+			});
+			
+			// 
+			$uploading_list.on('click', function(e){
+				var $target = $(e.target);
+
+				// Btn close -> delete file
+				if($target.hasClass('icon-close')){
+					removeFileFromList($uploading_list, $target.closest('.file').index());
 				}
 			});
 			
@@ -105,7 +115,7 @@ define(function(require, exports, module) {
 			// RESUMABLE.JS STUFF
 			// ------------------
 			var r = new Resumable({
-				target: Splunk.util.make_url('custom','uploader','upload'),
+				target: Splunk.util.make_url('custom','splunk_components_collection','scc_simpleupload_upload'),
 				query: {'splunk_form_key':Splunk.util.getFormKey()},
 				chunkSize: 5*1024*1024
 			});
@@ -118,17 +128,6 @@ define(function(require, exports, module) {
 			// Add file
 			// --------
 			r.on('fileAdded', function(file){
-				// Check if file exists
-				console.log(file.fileName);
-				$.ajax('/custom/uploader/service/alreadyuploaded/'+ file.fileName).done(function(response){
-					console.log('a');
-					console.log(response);
-				}).error(function(error){
-					//alert('There was an error while checking file before upload.');
-					console.log(error);
-				});
-				
-				
 				//
 				var $file = generateFileListElement(file);
 				addFileToList($pending_list, $file);
@@ -154,13 +153,14 @@ define(function(require, exports, module) {
 			// ------------
 			r.on('fileError', function(file, message){
 				var file_msg = '';
-				if(message.errorcode > 0 && message.message){
-					file_msg = 'Upload Failed.\n' + message.message + ' (' + message.errorcode + ')';
+				var msg = JSON.parse(message);
+				if(parseInt(msg.errorcode) > 0 && typeof(msg.message) != 'undefined'){
+					file_msg = 'Upload Failed.\n ' + msg.message + ' (error code ' + msg.errorcode + ')';
 				}
 				else{
-					file_msg = 'Upload Failed.\nPlease check web_service.log for error details.';
+					file_msg = 'Upload Failed.\n Please check Splunk web_service.log for error details.';
 				}
-				
+
 				$uploading_list.find('#' + file.uniqueIdentifier + ' .message').text(file_msg);
 			});
 			
@@ -244,31 +244,18 @@ define(function(require, exports, module) {
 			}
 			
 			
-			
-			alert('rtt');
-			
 			// 
 			function getServerFiles(){
 				$.ajax('/custom/splunk_components_collection/scc_simpleupload_service/list').done(function(files){
-					
-					console.log(files);
-					
-					/*
 					$.each(files, function(index, file){
 
 						if(file.finished){
 							var $file = generateFileListElement(file);
-							
-							//$file.data('name', file.name);
-							
-							
-							//console.log( $file );
-							
 							addFileToList($uploaded_list, $file);
 						}
 
 					});
-					*/
+
 				});
 		    }
 			

@@ -6,7 +6,10 @@
 	</description>
     <row>
         <html>
-            <div class = "splunk-view" data-require = "app/splunk_components_collection/components/scc_simpleupload/scc_simpleupload">
+            <div class = "splunk-view" data-require = "app/splunk_components_collection/components/scc_simpleupload/scc_simpleupload"
+				data-options = '{
+                    "post_process_script":"pps.py"
+				}'>
             </div>
         </html>
     </row>
