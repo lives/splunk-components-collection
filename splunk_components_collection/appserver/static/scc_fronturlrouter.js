@@ -1,8 +1,9 @@
+console.log('test before page loaded');
+
 require([
 	"jquery",
 	"splunkjs/mvc",
-	"splunkjs/mvc/utils",
-	"splunkjs/mvc/simplexml/ready!"
+	"splunkjs/mvc/utils"
 	
 ], function($, mvc, utils) {
 	var service = mvc.createService();

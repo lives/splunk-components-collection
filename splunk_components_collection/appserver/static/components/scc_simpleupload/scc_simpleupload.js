@@ -52,7 +52,7 @@ define(function(require, exports, module) {
 			var $uploaded_list = $('#uploaded ul');
 
 			var $upload_btn = $('#upload-btn');
-			//var fileProgressStates = {};
+			var fileProgressStates = {};
 			//var paused = false;
 
 			
@@ -105,8 +105,9 @@ define(function(require, exports, module) {
 					emptyFileList($pending_list);
 				});
 				
-				
 				r.upload();
+				
+				$upload_btn.hide();
 			});
 			
 			
@@ -141,12 +142,54 @@ define(function(require, exports, module) {
 			// ------------------
 			r.on('fileProgress', function(file){
 				
+				console.log(file);
+				
+				if(file.isComplete()){
+					
+					
+					
+					return;
+				}
+
+				var progress = file.progress();
+				var now = (new Date()).getTime();
+
+				var state = fileProgressStates[file.uniqueIdentifier];
+				if(!state){
+					state = fileProgressStates[file.uniqueIdentifier] = [now, progress];
+				}
+
+				var delta = (now - state[0]) / 1000;
+				var transffered = file.size * (progress - state[1]);
+				var rate = transffered / delta;
+				//var left = r.getSize()-(file.size*progress);
+
+				var $file =  $('#' + file.uniqueIdentifier);
+				
+				$file.find('.speed').text(humanFileSize(rate)+'/s');
+				$file.find('.progress').css({width: Math.round(progress*100)+'%'});
+				$file.addClass('uploading');
+
+				if(delta > 10){
+					fileProgressStates[file.uniqueIdentifier] = null;
+				}
 			});
 			
 			// Upload success
 			// --------------
 			r.on('fileSuccess', function(file, message){
-				addFileToList($uploaded_list, $('#' + file.uniqueIdentifier));
+				
+				// décrémente compteur uploading
+				var $counter = $uploading_list.closest('div').find('.counter');
+				$counter.html(parseInt($counter.html())-1);
+					
+				// 
+				var $file = $('#' + file.uniqueIdentifier);
+				$file.find('.speed').hide();
+				$file.find('.progressout').hide();
+					
+					
+				addFileToList($uploaded_list, $file);
 			});
 			
 			// Upload Error
